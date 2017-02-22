@@ -1,5 +1,5 @@
 name: Economia
 version: 0.0.2
-main: io.github.shidesu.economia
+main: io.github.shidesu.economia.economia
 authors: [Kao, CoolNono]
 description: Un plugin permettant la gestion et la création d'une économie sur votre serveur minecraft !
