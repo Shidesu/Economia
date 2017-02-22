@@ -22,7 +22,13 @@
 hs_err_pid*
 
 #Intellij Idea project
-.idea/
+.idea/*
 
 #iml Files
 *.iml
+
+.git/*
+
+targ/*
+
+.gitignore
