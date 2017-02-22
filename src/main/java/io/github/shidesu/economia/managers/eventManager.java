@@ -5,18 +5,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 
 /**
  * Created by Alexandre on 22/02/2017.
  */
 public class eventManager implements Listener {
     public eventManager(Plugin p) {
-        PluginManager pm = p.getServer().getPluginManager();
-        pm.registerEvents(this, p);
+       /* PluginManager pm = p.getServer().getPluginManager();
+        pm.registerEvents(this, p);*/
     }
     @EventHandler
-    public void onFirstJoin(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().hasPlayedBefore()) {
             Bukkit.broadcastMessage("Le nouveau venu va avoir son compte en banque olallalala !");
         }
