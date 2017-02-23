@@ -11,15 +11,20 @@ import java.util.List;
  */
 public class economyManager implements Economy {
 
+/*createBank methods*/
+
     @Override
     public EconomyResponse createBank(String s, OfflinePlayer offlinePlayer) {
         return null;
     }
 
+    @Deprecated
     @Override
     public EconomyResponse createBank(String s, String s1) {
         return null;
     }
+
+/*End createBank methods*/
 
 
     @Override
@@ -54,7 +59,7 @@ public class economyManager implements Economy {
         return false;
     }
 
-/*Withdraw Methods*/
+    /*Withdraw Methods*/
 /*These methods are used for withdrawing an amount of money from the player account or the player bank account.
 * Deprecated methods surely won't be define as they can't guarantee to link to the right player.*/
 /*Withdraw player methods*/
