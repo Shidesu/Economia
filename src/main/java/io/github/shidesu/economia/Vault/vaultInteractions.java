@@ -1,7 +1,8 @@
-package io.github.shidesu.economia.managers;
+package io.github.shidesu.economia.Vault;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.List;
@@ -9,7 +10,10 @@ import java.util.List;
 /**
  * Created by Alexandre on 22/02/2017.
  */
-public class economyManager implements Economy {
+public class vaultInteractions implements Economy {
+
+
+
 
 /*createBank methods*/
 
@@ -25,10 +29,13 @@ public class economyManager implements Economy {
     }
 
 /*End createBank methods*/
-
+/*createPlayerAccount methods*/
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
+
+        Bukkit.broadcastMessage(offlinePlayer.getName() + "'s account created");
+
         return false;
     }
 
@@ -37,13 +44,19 @@ public class economyManager implements Economy {
         return false;
     }
 
+    @Deprecated
+    @Override
+    public boolean createPlayerAccount(String s) {
+        return false;
+    }
 
+    @Deprecated
     @Override
     public boolean createPlayerAccount(String s, String s1) {
         return false;
     }
 
-
+    /*End createPlayerAccount methods*/
     @Override
     public String format(double v) {
         return null;
@@ -54,10 +67,6 @@ public class economyManager implements Economy {
         return 0;
     }
 
-    @Override
-    public boolean createPlayerAccount(String s) {
-        return false;
-    }
 
     /*Withdraw Methods*/
 /*These methods are used for withdrawing an amount of money from the player account or the player bank account.
@@ -202,11 +211,14 @@ public class economyManager implements Economy {
         return false;
     }
 
+    /*depositPlayer methods*/
+    @Deprecated
     @Override
     public EconomyResponse depositPlayer(String s, double v) {
         return null;
     }
 
+    @Deprecated
     @Override
     public EconomyResponse depositPlayer(String s, String s1, double v) {
         return null;
@@ -217,22 +229,25 @@ public class economyManager implements Economy {
         return null;
     }
 
-
-    @Override
-    public double getBalance(OfflinePlayer offlinePlayer) {
-        return 0;
-    }
-
-    @Override
-    public double getBalance(String s) {
-        return 0;
-    }
-
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String s, double v) {
         return null;
     }
 
+    /*End depositPlayer methods*/
+/*getBalance methods*/
+    @Override
+    public double getBalance(OfflinePlayer offlinePlayer) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getBalance(String s) {
+        return 0;
+    }
+
+    /*End getBalance methods*/
     @Override
     public EconomyResponse isBankOwner(String s, OfflinePlayer offlinePlayer) {
         return null;
