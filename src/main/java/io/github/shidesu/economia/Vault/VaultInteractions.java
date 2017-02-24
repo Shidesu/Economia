@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Alexandre on 22/02/2017.
  */
-public class vaultInteractions implements Economy {
+public class VaultInteractions implements Economy {
 
 
 
