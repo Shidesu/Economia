@@ -14,7 +14,7 @@ public class Economia extends JavaPlugin {
     private EventManager eventManager;
 
     private void initDirs() {
-        File f = new File(getDataFolder() + "\\PlayerData");
+        File f = new File(getDataFolder() + "/PlayerData");
         if (!f.exists()) {
             f.mkdirs();
 

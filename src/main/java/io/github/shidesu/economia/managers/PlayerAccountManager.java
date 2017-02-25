@@ -26,26 +26,31 @@ public class PlayerAccountManager implements Listener {
     }
 
 
-    public void getAccount(PlayerManager p) {
-        eco.getLogger().info(p.getName() + " a déjà un compte !");
+    public void getAccount(PlayerManager p) {                               /*This method will be use to get data stored in the yaml file*/
+        file = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
+        if (file.exists()) {
+            eco.getLogger().info(p.getName() + " a déjà un compte !");
+        } else
+            createAccount(p);
+
     }
 
-    public void createAccount(PlayerManager p) {
+    public void createAccount(PlayerManager p) {                            /* Send the player manager to mapData which store them into a map<String,Object> and finally save everything in the yaml file with saveData*/
         Map<String, Object> playerData = new HashMap<>();
         playerData = mapData(p);
-        saveData(playerData);
+        saveData(playerData, p);
 
 
     }
 
-    private void saveData(Object playerData) {
-        file = new File(eco.getDataFolder() + "\\PlayerData", p.getUniqueIdString() + ".yml");
+    private void saveData(Object playerData, PlayerManager p) {
+        file = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
         fileConfiguration.set("Player Data", playerData);
 
         try {
             fileConfiguration.save(file);
-            eco.getLogger().info(this.fileAccountPath);
+            eco.getLogger().info("Le compte a bien été créé.");
 
         } catch (IOException e) {
             String error = e.getMessage();
