@@ -31,11 +31,16 @@ public class EventManager implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        PlayerManager joiningPlayer = new PlayerManager(p);
+
         if (!p.hasPlayedBefore()) {
             Bukkit.broadcastMessage("Le nouveau venu va avoir son compte en banque olallalala !");
+            playerAccountManager.createAccount(joiningPlayer);
+
 
         } else {
             Bukkit.broadcastMessage("Celui là a déjà un compte en banque olalalalla !");
+            playerAccountManager.getAccount(joiningPlayer);
         }
     }
 
