@@ -3,3 +3,8 @@ version: 0.0.4
 main: io.github.shidesu.economia.Economia
 authors: [Kao, CoolNono]
 description: Un plugin permettant la gestion et la création d'une économie sur votre serveur minecraft !
+Commands:
+  ecopaid:
+    description: Pour débuguer les Commandes.
+    usage: /<command> or /<command> test
+    permission:

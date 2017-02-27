@@ -23,6 +23,7 @@ public class PlayerManager {
 
     public PlayerManager(OfflinePlayer offPlayer) {
         this.name = offPlayer.getName();
+        this.nickName = offPlayer.getName();
         this.uniqueId = offPlayer.getUniqueId();
         this.uniqueIdString = offPlayer.getUniqueId().toString();
     }
