@@ -17,7 +17,9 @@ public class PlayerAccountManager {
     private Economia eco;
     private String fileAccountPath;
     private File file;
+    private File usermapFile;
     private FileConfiguration fileConfiguration;
+    private FileConfiguration usermap;
 
 
     public PlayerAccountManager(Economia eco) {
@@ -52,6 +54,7 @@ public class PlayerAccountManager {
 
         try {
             fileConfiguration.save(file);
+            usermap.save(usermapFile);
             eco.getLogger().info("Le compte a bien été créé.");
 
         } catch (IOException e) {
@@ -61,6 +64,8 @@ public class PlayerAccountManager {
     }
 
     private FileConfiguration putData(PlayerManager p) {
+
+        usermapFile = new File(eco.getDataFolder(), "usermap.yml");
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
         List<String> banks = new ArrayList<>();
         banks.add("test");
@@ -69,6 +74,16 @@ public class PlayerAccountManager {
         fileConfiguration.set("UUID", p.getUniqueIdString());
         fileConfiguration.set("Money", 100);
         fileConfiguration.set("Banks", banks);
+
+        if (usermapFile.exists()) {
+            usermap = YamlConfiguration.loadConfiguration(usermapFile);
+            usermap.set(p.getName(), p.getUniqueIdString());
+        } else {
+            eco.saveResource("usermap.yml", false);
+            usermap = YamlConfiguration.loadConfiguration(usermapFile);
+            usermap.set(p.getName(), p.getUniqueIdString());
+
+        }
 
         return fileConfiguration;
     }
