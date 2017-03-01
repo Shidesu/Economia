@@ -1,3 +1,5 @@
-test: true
-blop: false
-Default Amount of Money: 400
+EssentialsEco: false #Set to true if you want to get the balance of a player stored by Essentials Eco when Economia create a player account
+StartingBalance: 0 #To set the balance a player get when his Economia Account is created
+PluginLocalization: en #Set fr to have Economia messages in french
+
+

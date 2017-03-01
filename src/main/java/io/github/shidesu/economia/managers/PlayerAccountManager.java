@@ -64,15 +64,15 @@ public class PlayerAccountManager {
     }
 
     private FileConfiguration putData(PlayerManager p) {
-
         usermapFile = new File(eco.getDataFolder(), "usermap.yml");
+        FileConfiguration defConf = YamlConfiguration.loadConfiguration(new File(eco.getDataFolder(), "config.yml"));
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
         List<String> banks = new ArrayList<>();
         banks.add("test");
         banks.add("truc");
         fileConfiguration.set("Name", p.getName());
         fileConfiguration.set("UUID", p.getUniqueIdString());
-        fileConfiguration.set("Money", 100);
+        fileConfiguration.set("Money", defConf.getInt("StartingBalance"));
         fileConfiguration.set("Banks", banks);
 
         if (usermapFile.exists()) {
