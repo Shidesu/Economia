@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class PlayerAccountManager {
     private Economia eco;
-    private String fileAccountPath;
-    private File file;
+    private File dataFile;
     private File usermapFile;
-    private FileConfiguration fileConfiguration;
-    private FileConfiguration usermap;
+    private FileConfiguration dataYaml;
+    private FileConfiguration usermapYaml;
+    private PlayerManager p;
 
 
     public PlayerAccountManager(Economia eco) {
@@ -27,16 +27,22 @@ public class PlayerAccountManager {
     }
 
 
-    public void getAccount(PlayerManager p) {                               /*This method will be use to get data stored in the yaml file*/
-        file = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
-        if (file.exists()) {
+    public boolean getAccount(PlayerManager p) {                               /*This method will be use to get data stored in the yaml file*/
+        this.p = p;
+        eco.getLogger().info(eco.getConfigManager().toString());
+        initFile();
+        if (dataFile.exists()) {
+            initYaml();
             eco.getLogger().info(p.getName() + " a déjà un compte !");
-            fileConfiguration = YamlConfiguration.loadConfiguration(file);
-            int test = (int) fileConfiguration.get("Money");
+            int test = (int) dataYaml.get("Money");
             Bukkit.broadcastMessage(p.getName() + " a " + test + " abyss !!!");
+            return true;
         } else {
             Bukkit.broadcastMessage("noob tu pues en codage kao");
+            createFile();
+            initYaml();
             createAccount(p);
+            return false;
         }
 
     }
@@ -50,11 +56,10 @@ public class PlayerAccountManager {
     }
 
     private void saveData(PlayerManager p) {
-        file = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
 
         try {
-            fileConfiguration.save(file);
-            usermap.save(usermapFile);
+            dataYaml.save(dataFile);
+           // usermapYaml.save(usermapFile);
             eco.getLogger().info("Le compte a bien été créé.");
 
         } catch (IOException e) {
@@ -64,28 +69,48 @@ public class PlayerAccountManager {
     }
 
     private FileConfiguration putData(PlayerManager p) {
-        usermapFile = new File(eco.getDataFolder(), "usermap.yml");
-        FileConfiguration defConf = YamlConfiguration.loadConfiguration(new File(eco.getDataFolder(), "config.yml"));
-        fileConfiguration = YamlConfiguration.loadConfiguration(file);
+        int startBalance = eco.getConfigManager().getStartingBalance();
         List<String> banks = new ArrayList<>();
         banks.add("test");
         banks.add("truc");
-        fileConfiguration.set("Name", p.getName());
-        fileConfiguration.set("UUID", p.getUniqueIdString());
-        fileConfiguration.set("Money", defConf.getInt("StartingBalance"));
-        fileConfiguration.set("Banks", banks);
+        dataYaml.set("Name", p.getName());
+        dataYaml.set("UUID", p.getUniqueIdString());
+        dataYaml.set("Money", startBalance);
+        dataYaml.set("Banks", banks);
 
-        if (usermapFile.exists()) {
-            usermap = YamlConfiguration.loadConfiguration(usermapFile);
-            usermap.set(p.getName(), p.getUniqueIdString());
-        } else {
-            eco.saveResource("usermap.yml", false);
-            usermap = YamlConfiguration.loadConfiguration(usermapFile);
-            usermap.set(p.getName(), p.getUniqueIdString());
 
+
+        return dataYaml;
+    }
+
+    private void initFile() {
+        this.dataFile = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + "config.yml");
+
+    }
+
+    private void createFile(){
+        if (!this.dataFile.exists()){
+            try {
+                this.dataFile.createNewFile();
+            } catch (IOException e) {
+                eco.getLogger().info(e.getMessage());
+            }
         }
+    }
 
-        return fileConfiguration;
+    private void initYaml() {
+        this.dataYaml = YamlConfiguration.loadConfiguration(dataFile);
+
     }
 
 }
+/*
+if (usermapFile.exists()) {
+        usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
+        usermapYaml.set(p.getName(), p.getUniqueIdString());
+        } else {
+        eco.saveResource("usermap.yml", false);
+        usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
+        usermapYaml.set(p.getName(), p.getUniqueIdString());
+
+        }*/

@@ -1,10 +1,9 @@
 package io.github.shidesu.economia;
 
 import io.github.shidesu.economia.managers.CommandsManager;
+import io.github.shidesu.economia.managers.ConfigManager;
 import io.github.shidesu.economia.managers.EventManager;
 import io.github.shidesu.economia.managers.PlayerAccountManager;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,8 +15,7 @@ public class Economia extends JavaPlugin {
     private PlayerAccountManager playerAccountManager;
     private EventManager eventManager;
     private CommandsManager commandsManager;
-    private FileConfiguration fileConfiguration;
-    private File fileConf;
+    private ConfigManager configManager;
 
     private void initDirs() {
         File f = new File(getDataFolder() + "/PlayerData");
@@ -31,11 +29,11 @@ public class Economia extends JavaPlugin {
     public void onEnable() {
         initManagers();
         initDirs();
-        loadConfig();
         eventManager.getPm().registerEvents(eventManager.getL(), eventManager.getEco());
         getLogger().info("[Economia] Economia chargée !");
         getLogger().info(getDataFolder().getPath());
         getCommand("ecopaid").setExecutor(commandsManager);
+        getLogger().info(String.valueOf(configManager.getStartingBalance()));
 
     }
 
@@ -48,6 +46,8 @@ public class Economia extends JavaPlugin {
         playerAccountManager = new PlayerAccountManager(this);
         eventManager = new EventManager(this);
         commandsManager = new CommandsManager(this);
+        configManager = new ConfigManager(this);
+
     }
 
 
@@ -55,23 +55,8 @@ public class Economia extends JavaPlugin {
         return this.playerAccountManager;
     }
 
-    public void loadConfig() {
-        this.fileConf = new File(getDataFolder(), "config.yml");
-        if (fileConf.exists()) {
-            this.fileConfiguration = YamlConfiguration.loadConfiguration(fileConf);
-        } else {
-            saveResource("config.yml", false);  //saveResource try to get the file named config.yml in the resources folder of the program and then saved it in the plugin Economia data folder.
 
-        }
-
+    public ConfigManager getConfigManager() {
+        return this.configManager;
     }
-
-    public FileConfiguration getFileConfiguration() {
-        return this.fileConfiguration;
-    }
-
-    public void setFileConfiguration(FileConfiguration f) {
-        this.fileConfiguration = f;
-    }
-
 }

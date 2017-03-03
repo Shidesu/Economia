@@ -1,5 +1,6 @@
 package io.github.shidesu.economia.Vault;
 
+import io.github.shidesu.economia.Economia;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -12,7 +13,16 @@ import java.util.List;
  */
 public class VaultInteractions implements Economy {
 
+    private Economia eco;
 
+    public VaultInteractions(Economia eco) {
+        this.eco = eco;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return eco.isEnabled();
+    }
 
 
 /*createBank methods*/
@@ -69,8 +79,6 @@ public class VaultInteractions implements Economy {
 
 
     /*Withdraw Methods*/
-/*These methods are used for withdrawing an amount of money from the player account or the player bank account.
-* Deprecated methods surely won't be define as they can't guarantee to link to the right player.*/
 /*Withdraw player methods*/
     @Deprecated
     @Override
@@ -178,12 +186,7 @@ public class VaultInteractions implements Economy {
 
     @Override
     public String getName() {
-        return null;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
+        return "Economia";
     }
 
     @Override
