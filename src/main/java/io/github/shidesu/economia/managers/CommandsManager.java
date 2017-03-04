@@ -23,7 +23,8 @@ public class CommandsManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         PlayerManager p = new PlayerManager((Player) sender);
-        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && args[0].equalsIgnoreCase("Test") && Utils.isInt(args[1], p)) {
+        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && args[0].equalsIgnoreCase("Test") && Utils.isInt(args[1])) {
+            Utils.setMoneyMap(args[1], p);
             ecopaidCommand((Player) sender);
             return true;
         } else if (command.getName().equalsIgnoreCase("ecopaid") && args.length == 0) {

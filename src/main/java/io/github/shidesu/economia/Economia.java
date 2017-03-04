@@ -21,7 +21,7 @@ public class Economia extends JavaPlugin {
         initManagers();
         initDirs();
         initCommands();
-        eventManager.getPm().registerEvents(eventManager.getL(), eventManager.getEco());
+        eventManager.getPm().registerEvents(eventManager, this);
         getLogger().info("[Economia] Economia chargée !");
         getLogger().info(getDataFolder().getPath());
 

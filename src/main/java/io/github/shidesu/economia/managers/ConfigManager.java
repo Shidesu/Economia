@@ -29,14 +29,14 @@ public class ConfigManager {
     private void initYaml() {
         if (this.configFile.exists()) {
             this.configYaml = YamlConfiguration.loadConfiguration(configFile);
-        } else if (!this.configFile.exists()) {
+        } else {
             eco.saveResource("config.yml", false);
-            this.configYaml =  YamlConfiguration.loadConfiguration(configFile);
+            this.configYaml = YamlConfiguration.loadConfiguration(configFile);
         }
 
         if (this.usermapFile.exists()) {
             this.usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
-        } else if (!this.usermapFile.exists()) {
+        } else {
             eco.saveResource("usermap.yml", false);
             this.usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
         }

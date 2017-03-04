@@ -21,11 +21,9 @@ public class EventManager implements Listener {
     public EventManager(Economia eco) {
        /* PluginManager pm = p.getServer().getPluginManager();
         pm.registerEvents(this, p);*/
-        setEco(eco);
-        setPm(eco.getServer().getPluginManager());
-        setPlayerAccountManager(eco.getPlayerAccountManager());
-        setL(this);
-
+        this.eco = eco;
+        this.pm = eco.getServer().getPluginManager();
+        this.playerAccountManager = eco.getPlayerAccountManager();
     }
 
     @EventHandler
@@ -48,31 +46,11 @@ public class EventManager implements Listener {
         return this.l;
     }
 
-    public void setL(Listener newL) {
-        this.l = newL;
-    }
-
     public PluginManager getPm() {
         return this.pm;
     }
 
-    public void setPm(PluginManager newPm) {
-        this.pm = newPm;
-    }
-
     public PlayerAccountManager getPlayerAccountManager() {
         return this.playerAccountManager;
-    }
-
-    public void setPlayerAccountManager(PlayerAccountManager newPlayerAccountManager) {
-        this.playerAccountManager = newPlayerAccountManager;
-    }
-
-    public Economia getEco() {
-        return this.eco;
-    }
-
-    public void setEco(Economia newEco) {
-        this.eco = newEco;
     }
 }

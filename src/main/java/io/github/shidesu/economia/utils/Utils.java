@@ -1,7 +1,6 @@
 package io.github.shidesu.economia.utils;
 
 import io.github.shidesu.economia.managers.PlayerManager;
-import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,22 +11,28 @@ import java.util.UUID;
  */
 public class Utils {
 
-    private static Map<UUID, Integer> moneyArgEcopaid = new HashMap<>();
+    private static Map<UUID, Integer> moneyMap = new HashMap<>();
 
-    public static boolean isInt(String s, PlayerManager p){
+    public static boolean isInt(String s){
         try{
-            int amount = Integer.parseInt(s);
-            moneyArgEcopaid.put(p.getUniqueId(), amount);
-            Bukkit.broadcastMessage("Todo va bene");
+            Integer.parseInt(s);
             return true;
         }catch(NumberFormatException e){
-            Bukkit.broadcastMessage("aie aie aie muchachos");
             return false;
         }
     }
 
+    public static void setMoneyMap(String s, PlayerManager p){
+        try{
+            int amount = Integer.parseInt(s);
+            moneyMap.put(p.getUniqueId(), amount);
+        }catch(NumberFormatException e){
+
+        }
+    }
+
     public static int getParseInt(PlayerManager p) {
-        return moneyArgEcopaid.get(p.getUniqueId());
+        return moneyMap.get(p.getUniqueId());
     }
 
 }
