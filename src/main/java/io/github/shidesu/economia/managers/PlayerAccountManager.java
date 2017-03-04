@@ -7,8 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alexandre on 23/02/2017.
@@ -16,9 +14,7 @@ import java.util.List;
 public class PlayerAccountManager {
     private Economia eco;
     private File dataFile;
-    private File usermapFile;
-    private FileConfiguration dataYaml;
-    private FileConfiguration usermapYaml;
+    private YamlConfiguration dataYaml;
     private PlayerManager p;
 
 
@@ -40,56 +36,55 @@ public class PlayerAccountManager {
         } else {
             Bukkit.broadcastMessage("noob tu pues en codage kao");
             createFile();
-            initYaml();
             createAccount(p);
             return false;
         }
 
     }
 
-    public void createAccount(PlayerManager p) {                            /* Send the player manager to mapData which store them into a map<String,Object> and finally save everything in the yaml file with saveData*/
-
+    public boolean createAccount(PlayerManager p) {                            /* Send the player manager to mapData which store them into a map<String,Object> and finally save everything in the yaml file with saveData*/
+        initFile();
+        initYaml();
         putData(p);
-        saveData(p);
+        boolean isCreated = saveData(p);
 
+        return isCreated;
 
     }
 
-    private void saveData(PlayerManager p) {
+    private boolean saveData(PlayerManager p) {
 
         try {
             dataYaml.save(dataFile);
-           // usermapYaml.save(usermapFile);
+            eco.getConfigManager().getUsermapYaml().save(eco.getConfigManager().getUsermapFile());
             eco.getLogger().info("Le compte a bien été créé.");
+
+            return true;
 
         } catch (IOException e) {
             String error = e.getMessage();
             eco.getLogger().info(error);
+            return false;
         }
     }
 
     private FileConfiguration putData(PlayerManager p) {
         int startBalance = eco.getConfigManager().getStartingBalance();
-        List<String> banks = new ArrayList<>();
-        banks.add("test");
-        banks.add("truc");
         dataYaml.set("Name", p.getName());
         dataYaml.set("UUID", p.getUniqueIdString());
         dataYaml.set("Money", startBalance);
-        dataYaml.set("Banks", banks);
-
-
+        eco.getConfigManager().getUsermapYaml().set(p.getName(), p.getUniqueIdString());
 
         return dataYaml;
     }
 
     private void initFile() {
-        this.dataFile = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + "config.yml");
+        this.dataFile = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
 
     }
 
-    private void createFile(){
-        if (!this.dataFile.exists()){
+    private void createFile() {
+        if (!this.dataFile.exists()) {
             try {
                 this.dataFile.createNewFile();
             } catch (IOException e) {
@@ -101,6 +96,13 @@ public class PlayerAccountManager {
     private void initYaml() {
         this.dataYaml = YamlConfiguration.loadConfiguration(dataFile);
 
+    }
+
+    public File getDataFile(){
+        return this.dataFile;
+    }
+    public YamlConfiguration getDataYaml(){
+        return this.dataYaml;
     }
 
 }

@@ -40,6 +40,14 @@ public class ConfigManager {
         }
     }
 
+    public File getConfigFile() {
+        return this.configFile;
+    }
+
+    public File getUsermapFile() {
+        return this.usermapFile;
+    }
+
     public YamlConfiguration getConfigYaml() {
         return this.configYaml;
     }
@@ -48,18 +56,20 @@ public class ConfigManager {
         return this.usermapYaml;
     }
 
-    public String getLocalization(){
+    public String getLocalization() {
         return this.configYaml.getString("PluginLocalization");
     }
-    public int getStartingBalance(){
+
+    public int getStartingBalance() {
         return this.configYaml.getInt("StartingBalance");
     }
-    public boolean getUseEssentialsEco(){
+
+    public boolean getUseEssentialsEco() {
         return this.configYaml.getBoolean("EssentialsEco");
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Je suis du déboguage";
     }
 

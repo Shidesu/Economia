@@ -52,10 +52,12 @@ public class PlayerManager {
         this.uniqueId = newUniqueId;
         setUniqueIdString(newUniqueId);
     }
-    public String getUniqueIdString(){
+
+    public String getUniqueIdString() {
         return this.uniqueIdString;
     }
-    private void setUniqueIdString(UUID newUniqueId){
+
+    private void setUniqueIdString(UUID newUniqueId) {
         this.uniqueIdString = newUniqueId.toString();
 
     }

@@ -1,9 +1,9 @@
 package io.github.shidesu.economia.Vault;
 
 import io.github.shidesu.economia.Economia;
+import io.github.shidesu.economia.managers.PlayerManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.List;
@@ -43,10 +43,8 @@ public class VaultInteractions implements Economy {
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
-
-        Bukkit.broadcastMessage(offlinePlayer.getName() + "'s account created");
-
-        return false;
+        PlayerManager p = new PlayerManager(offlinePlayer);
+        return eco.getPlayerAccountManager().createAccount(p);
     }
 
     @Override
@@ -131,7 +129,8 @@ public class VaultInteractions implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer offlinePlayer) {
-        return false;
+        PlayerManager p = new PlayerManager(offlinePlayer);
+        return eco.getPlayerAccountManager().getAccount(p);
     }
 
     /*End hasAccount methods*/

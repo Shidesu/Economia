@@ -1,9 +1,6 @@
 package io.github.shidesu.economia;
 
-import io.github.shidesu.economia.managers.CommandsManager;
-import io.github.shidesu.economia.managers.ConfigManager;
-import io.github.shidesu.economia.managers.EventManager;
-import io.github.shidesu.economia.managers.PlayerAccountManager;
+import io.github.shidesu.economia.managers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,14 +13,8 @@ public class Economia extends JavaPlugin {
     private EventManager eventManager;
     private CommandsManager commandsManager;
     private ConfigManager configManager;
+    private PlayerMoneyManager playerMoneyManager;
 
-    private void initDirs() {
-        File f = new File(getDataFolder() + "/PlayerData");
-        if (!f.exists()) {
-            f.mkdirs();
-
-        }
-    }
 
     @Override
     public void onEnable() {
@@ -32,7 +23,6 @@ public class Economia extends JavaPlugin {
         eventManager.getPm().registerEvents(eventManager.getL(), eventManager.getEco());
         getLogger().info("[Economia] Economia chargée !");
         getLogger().info(getDataFolder().getPath());
-        getCommand("ecopaid").setExecutor(commandsManager);
         getLogger().info(String.valueOf(configManager.getStartingBalance()));
 
     }
@@ -42,21 +32,39 @@ public class Economia extends JavaPlugin {
         getLogger().info("Economia désactivée !");
     }
 
+    private void initCommands() {
+        getCommand("ecopaid").setExecutor(commandsManager);
+    }
+
     private void initManagers() {
         playerAccountManager = new PlayerAccountManager(this);
         eventManager = new EventManager(this);
         commandsManager = new CommandsManager(this);
         configManager = new ConfigManager(this);
+        playerMoneyManager = new PlayerMoneyManager(this);
 
+    }
+
+    private void initDirs() {
+        File f = new File(getDataFolder() + "/PlayerData");
+        if (!f.exists()) {
+            f.mkdirs();
+
+        }
     }
 
 
     public PlayerAccountManager getPlayerAccountManager() {
+
         return this.playerAccountManager;
     }
 
+    public PlayerMoneyManager getPlayerMoneyManager() {
+        return this.playerMoneyManager;
+    }
 
     public ConfigManager getConfigManager() {
+
         return this.configManager;
     }
 }
