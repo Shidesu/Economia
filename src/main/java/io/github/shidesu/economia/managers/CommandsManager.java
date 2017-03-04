@@ -22,10 +22,11 @@ public class CommandsManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && args[0].equals("Test") && Utils.isInt(args[1])) {
-            ecopaidCommand((Player)sender);
+        PlayerManager p = new PlayerManager((Player) sender);
+        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && args[0].equalsIgnoreCase("Test") && Utils.isInt(args[1], p)) {
+            ecopaidCommand((Player) sender);
             return true;
-        } else if (command.getName().equalsIgnoreCase("ecopaid")) {
+        } else if (command.getName().equalsIgnoreCase("ecopaid") && args.length == 0) {
             Bukkit.broadcastMessage("Vous avez payé le vent");
             return true;
         }
@@ -33,9 +34,9 @@ public class CommandsManager implements CommandExecutor {
         return false;
     }
 
-    private void ecopaidCommand(Player p){
+    private void ecopaidCommand(Player p) {
         PlayerManager pm = new PlayerManager(p);
         Bukkit.broadcastMessage("Vous avez utilisé la commande de test ://");
-        eco.getPlayerMoneyManager().withdrawPlayer(10,pm);
+        eco.getPlayerMoneyManager().withdrawPlayer(Utils.getParseInt(pm), pm);
     }
 }

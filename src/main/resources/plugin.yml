@@ -7,7 +7,7 @@ description: Un plugin permettant la gestion et la création d'une économie sur
 commands:
   ecopaid:
     description: Pour débuguer les Commandes.
-    usage: /<command> or /<command> test
+    usage: /<command> or /<command> Test <amount of money>
     permission:
 #depend: [Vault]
 softdepend: [Essentials]

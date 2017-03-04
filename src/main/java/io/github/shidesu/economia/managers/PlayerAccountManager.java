@@ -26,7 +26,7 @@ public class PlayerAccountManager {
     public boolean getAccount(PlayerManager p) {                               /*This method will be use to get data stored in the yaml file*/
         this.p = p;
         eco.getLogger().info(eco.getConfigManager().toString());
-        initFile();
+        initFile(this.p);
         if (dataFile.exists()) {
             initYaml();
             eco.getLogger().info(p.getName() + " a déjà un compte !");
@@ -43,7 +43,7 @@ public class PlayerAccountManager {
     }
 
     public boolean createAccount(PlayerManager p) {                            /* Send the player manager to mapData which store them into a map<String,Object> and finally save everything in the yaml file with saveData*/
-        initFile();
+        initFile(p);
         initYaml();
         putData(p);
         boolean isCreated = saveData(p);
@@ -78,7 +78,7 @@ public class PlayerAccountManager {
         return dataYaml;
     }
 
-    private void initFile() {
+    private void initFile(PlayerManager p) {
         this.dataFile = new File(eco.getDataFolder() + "/PlayerData", p.getUniqueIdString() + ".yml");
 
     }

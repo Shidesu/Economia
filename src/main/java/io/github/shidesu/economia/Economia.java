@@ -20,10 +20,10 @@ public class Economia extends JavaPlugin {
     public void onEnable() {
         initManagers();
         initDirs();
+        initCommands();
         eventManager.getPm().registerEvents(eventManager.getL(), eventManager.getEco());
         getLogger().info("[Economia] Economia chargée !");
         getLogger().info(getDataFolder().getPath());
-        getLogger().info(String.valueOf(configManager.getStartingBalance()));
 
     }
 

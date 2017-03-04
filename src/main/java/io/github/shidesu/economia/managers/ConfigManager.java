@@ -18,12 +18,12 @@ public class ConfigManager {
     public ConfigManager(Economia eco) {
         this.eco = eco;
         initFiles();
-        initYaml();
     }
 
     private void initFiles() {
         this.configFile = new File(eco.getDataFolder(), "config.yml");
         this.usermapFile = new File(eco.getDataFolder(), "usermap.yml");
+        initYaml();
     }
 
     private void initYaml() {
@@ -31,12 +31,14 @@ public class ConfigManager {
             this.configYaml = YamlConfiguration.loadConfiguration(configFile);
         } else if (!this.configFile.exists()) {
             eco.saveResource("config.yml", false);
+            this.configYaml =  YamlConfiguration.loadConfiguration(configFile);
         }
 
         if (this.usermapFile.exists()) {
             this.usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
         } else if (!this.usermapFile.exists()) {
             eco.saveResource("usermap.yml", false);
+            this.usermapYaml = YamlConfiguration.loadConfiguration(usermapFile);
         }
     }
 
