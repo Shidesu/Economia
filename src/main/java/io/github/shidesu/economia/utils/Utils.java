@@ -1,38 +1,34 @@
 package io.github.shidesu.economia.utils;
 
-import io.github.shidesu.economia.managers.PlayerManager;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * Created by Alexandre on 04/03/2017.
  */
 public class Utils {
 
-    private static Map<UUID, Integer> moneyMap = new HashMap<>();
-
-    public static boolean isInt(String s){
-        try{
+    public static boolean isInt(String s) {
+        try {
             Integer.parseInt(s);
             return true;
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
     }
 
-    public static void setMoneyMap(String s, PlayerManager p){
-        try{
-            int amount = Integer.parseInt(s);
-            moneyMap.put(p.getUniqueId(), amount);
-        }catch(NumberFormatException e){
+    public static Player stringToPlayer(String name) {
 
-        }
+        Player p = Bukkit.getOnlinePlayers().stream().filter(x -> x.getName().equals(name)).findFirst().get();
+
+        return p;
     }
 
-    public static int getParseInt(PlayerManager p) {
-        return moneyMap.get(p.getUniqueId());
-    }
+    public static boolean isStringOnlinePlayer(String name) {
+        boolean test = Bukkit.getOnlinePlayers().stream().anyMatch(x -> x.getName().equals(name));
 
+        return test;
+
+    }
 }
+

@@ -18,14 +18,14 @@ public class CommandsManager implements CommandExecutor {
     public CommandsManager(Economia eco) {
         this.eco = eco;
     }
-    //Bukkit.getOnlinePlayers().stream().filter((p) -> p.getName().equals("Pseudo")).findFirst();
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         PlayerManager p = new PlayerManager((Player) sender);
-        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && args[0].equalsIgnoreCase("Test") && Utils.isInt(args[1])) {
-            Utils.setMoneyMap(args[1], p);
-            ecopaidCommand((Player) sender);
+        if (command.getName().equalsIgnoreCase("ecopaid") && args.length >= 2 && Utils.isStringOnlinePlayer(args[0]) && Utils.isInt(args[1])) {
+            PlayerMoneyManager.setMoneyMap(args[1], p);
+            ecopaidCommand(p);
             return true;
         } else if (command.getName().equalsIgnoreCase("ecopaid") && args.length == 0) {
             Bukkit.broadcastMessage("Vous avez payé le vent");
@@ -35,9 +35,8 @@ public class CommandsManager implements CommandExecutor {
         return false;
     }
 
-    private void ecopaidCommand(Player p) {
-        PlayerManager pm = new PlayerManager(p);
+    private void ecopaidCommand(PlayerManager p) {
         Bukkit.broadcastMessage("Vous avez utilisé la commande de test ://");
-        eco.getPlayerMoneyManager().withdrawPlayer(Utils.getParseInt(pm), pm);
+        eco.getPlayerMoneyManager().withdrawPlayer(PlayerMoneyManager.getParseInt(p), p);
     }
 }
